@@ -1,0 +1,11 @@
+services:
+  claude2api:
+    build: .
+    ports:
+      - "8787:8787"
+    environment:
+      CLAUDE2API_CONFIG_PATH: /app/runtime-config/config.yaml
+    volumes:
+      - ./data:/app/data
+      - ./runtime-config:/app/runtime-config
+    restart: unless-stopped

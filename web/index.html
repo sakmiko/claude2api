@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claude2API</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/workbench.css" />
+    <link rel="stylesheet" href="/static/claude-style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace-content">跳转到内容</a>
+    <section class="view view-login hidden">
+      <div class="login-shell">
+        <div class="login-lang-switcher">
+          <button
+            id="login-lang-en"
+            class="lang-btn"
+            data-lang="en"
+            title="English"
+          >
+            EN
+          </button>
+          <button
+            id="login-lang-zh"
+            class="lang-btn"
+            data-lang="zh"
+            title="中文"
+          >
+            中
+          </button>
+          <button
+            id="login-theme-toggle"
+            class="theme-toggle-login"
+            title="Toggle theme"
+          >
+            外观
+          </button>
+        </div>
+        <div class="login-story">
+          <div class="eyebrow">CLAUDE2API / 导航</div>
+          <h1>你的 Claude，<br />随处可用。</h1>
+          <p>在网页和客户端中，继续你的对话。</p>
+          <div class="orbit-art" aria-hidden="true">
+            <div class="orbit o1"></div>
+            <div class="orbit o2"></div>
+            <div class="orbit o3"></div>
+            <div class="orbit-core">
+              <img src="/static/claude.svg" alt="" />
+            </div>
+            <span class="orbit-label l1">OpenAI</span
+            ><span class="orbit-label l2">Anthropic</span
+            ><span class="orbit-label l3">Web mirror</span>
+          </div>
+          <div class="login-story-foot">YOUR MODELS. YOUR WORKFLOW.</div>
+        </div>
+        <div class="box">
+          <a class="login-brand" href="/" aria-label="Claude2API 首页">
+            <span class="login-logo"
+              ><img src="/static/claude.svg" alt=""
+            /></span>
+            <span>Claude2API</span>
+          </a>
+          <h2 data-i18n="loginTitle">登录</h2>
+          <p class="sub" data-i18n="loginSubtitle">输入密码或访问密钥</p>
+          <form id="form">
+            <label for="credential" data-i18n="credential">访问凭证</label>
+            <input
+              id="credential"
+              type="password"
+              placeholder="请输入密码或访问密钥"
+              autocomplete="current-password"
+              required
+              autofocus
+            />
+            <button id="btn" type="submit" data-i18n="continue">继续</button>
+            <div class="err" id="err" role="alert"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <div class="view view-admin hidden app">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <a class="sidebar-wordmark" href="/">Claude2API</a
+          ><button
+            id="btn-sidebar-collapse"
+            class="icon-button"
+            type="button"
+            aria-label="收起侧栏"
+            aria-expanded="true"
+          >
+            <span data-ui-icon="panel"></span>
+          </button>
+        </div>
+        <nav class="nav" id="nav" aria-label="主导航">
+          <button class="nav-item nav-compose" data-page="chat">
+            试聊一句
+          </button>
+          <button class="nav-item" data-page="overview">总览</button>
+          <button class="nav-item" data-page="pool">选择账号</button>
+          <div class="nav-label" data-i18n="manageSection">管理</div>
+          <button class="nav-item" data-page="accounts">账号管理</button>
+          <button class="nav-item" data-page="keys">访问密钥</button>
+          <button class="nav-item" data-page="api">接入客户端</button>
+          <button class="nav-item" data-page="logs">调用记录</button>
+          <button class="nav-item" data-page="system">设置</button>
+        </nav>
+        <div class="nav-foot">
+          <button
+            id="btn-workspace-menu"
+            class="workspace-profile"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="workspace-menu"
+          >
+            <span class="workspace-avatar" data-ui-icon="user"></span
+            ><span class="workspace-profile-label"
+              ><b data-i18n="workspaceName">本地工作区</b
+              ><small data-i18n="preferences">偏好设置</small></span
+            ><span class="workspace-chevron" data-ui-icon="chevron"></span>
+          </button>
+        </div>
+      </aside>
+      <div
+        id="workspace-menu"
+        class="workspace-popover hidden"
+        role="dialog"
+        aria-label="偏好设置"
+      >
+        <div class="popover-caption" data-i18n="preferences">偏好设置</div>
+        <div class="lang-switcher">
+          <button
+            id="btn-lang-en"
+            class="lang-btn"
+            data-lang="en"
+            title="English"
+          >
+            EN
+          </button>
+          <button id="btn-lang-zh" class="lang-btn" data-lang="zh" title="中文">
+            中
+          </button>
+        </div>
+        <button id="btn-theme-toggle" class="theme-toggle" title="Toggle theme">
+          外观
+        </button>
+        <button id="btn-logout" class="nav-link nav-logout" data-i18n="logout">
+          退出登录
+        </button>
+      </div>
+      <main class="main" id="workspace-content" tabindex="-1">
+        <div class="workspace-topbar">
+          <span
+            >Claude2API <span class="slash">/</span>
+            <b id="workspace-location">工作台</b></span
+          ><button
+            id="btn-mobile-menu"
+            class="btn mobile-menu"
+            aria-label="打开外观与账户菜单"
+            aria-expanded="false"
+          >
+            菜单</button
+          ><span class="workspace-chip"><i></i> 本地服务</span>
+        </div>
+        <p id="workspace-subtitle" class="workspace-subtitle"></p>
+        <div id="msg" class="msg hidden"></div>
+        <section class="page hidden" id="page-overview">
+          <div class="overview-hero">
+            <div>
+              <div class="eyebrow">总览</div>
+              <h2 data-i18n="overviewTitle">每一次连接，都井然有序。</h2>
+              <p data-i18n="overviewDesc">
+                管理账号、接入客户端、验证对话。在这里，专注于你的下一步。
+              </p>
+              <div class="hero-actions">
+                <button
+                  class="btn btn-primary"
+                  data-go="api"
+                  data-i18n="connectClient"
+                >
+                  接入客户端</button
+                ><button class="btn" data-go="chat" data-i18n="tryPlayground">
+                  打开对话测试
+                </button>
+              </div>
+            </div>
+            <div class="hero-mark" aria-hidden="true">
+              <img src="/static/claude.svg" alt="" />
+            </div>
+            <span class="hero-state" id="overview-status">连接中…</span>
+          </div>
+          <div class="metric-grid">
+            <div class="metric-card">
+              <span data-i18n="totalAccounts">账号总数</span
+              ><b id="metric-accounts">—</b
+              ><small data-i18n="managedSessions">集中管理所有会话</small>
+            </div>
+            <div class="metric-card">
+              <span data-i18n="usableSessions">可用会话</span
+              ><b id="metric-usable">—</b
+              ><small data-i18n="sessionHint">已导入且未标记失效</small>
+            </div>
+            <div class="metric-card">
+              <span data-i18n="modelIdentifiers">模型标识</span
+              ><b id="metric-models">—</b
+              ><small data-i18n="modelHint">包含扩展思考变体</small>
+            </div>
+            <div class="metric-card">
+              <span data-i18n="totalRequests">累计调用</span
+              ><b id="metric-requests">—</b
+              ><small data-i18n="requestHint">追踪服务的每次响应</small>
+            </div>
+          </div>
+          <div class="health-strip">
+            <span class="period" data-i18n="lastDay">近 24 小时</span
+            ><span
+              ><span data-i18n="successRate">成功率</span
+              ><b id="health-success">—</b></span
+            ><span
+              ><span data-i18n="averageTime">平均耗时</span
+              ><b id="health-latency">—</b></span
+            ><span
+              ><span data-i18n="resting">休息中</span
+              ><b id="health-cooling">0</b></span
+            >
+          </div>
+          <div class="overview-columns">
+            <article class="workbench-card">
+              <div class="card-heading">
+                <div>
+                  <div class="eyebrow">接入方式</div>
+                  <h3 data-i18n="protocolTitle">三种接口，一个入口</h3>
+                </div>
+                <span class="small-pill">3 APIs</span>
+              </div>
+              <button class="protocol-row" data-go="api" data-protocol="openai">
+                <span class="protocol-symbol" data-ui-icon="chat"></span
+                ><span
+                  ><b>Chat Completions</b
+                  ><small>OpenAI · /v1/chat/completions</small></span
+                ><span
+                  class="row-arrow"
+                  data-ui-icon="arrowUpRight"
+                ></span></button
+              ><button
+                class="protocol-row"
+                data-go="api"
+                data-protocol="responses"
+              >
+                <span class="protocol-symbol" data-ui-icon="layers"></span
+                ><span
+                  ><b>Responses</b><small>OpenAI · /v1/responses</small></span
+                ><span
+                  class="row-arrow"
+                  data-ui-icon="arrowUpRight"
+                ></span></button
+              ><button
+                class="protocol-row"
+                data-go="api"
+                data-protocol="anthropic"
+              >
+                <span
+                  class="protocol-symbol anthropic"
+                  data-ui-icon="code"
+                ></span
+                ><span
+                  ><b>Messages</b><small>Anthropic · /v1/messages</small></span
+                ><span class="row-arrow" data-ui-icon="arrowUpRight"></span>
+              </button>
+              <p class="muted-note" data-i18n="protocolNote">
+                通过网页会话转换协议；模型与额度以账号实际权限为准。
+              </p>
+            </article>
+            <article class="workbench-card quick-start">
+              <div class="eyebrow">开始使用</div>
+              <h3 data-i18n="startTitle">准备好你的第一条连接</h3>
+              <button data-go="accounts">
+                <span>01</span>
+                <div>
+                  <b data-i18n="stepAccounts">导入账号</b
+                  ><small data-i18n="stepAccountsDesc"
+                    >添加 sessionKey，检查会话状态</small
+                  >
+                </div></button
+              ><button data-go="keys">
+                <span>02</span>
+                <div>
+                  <b data-i18n="stepKeys">创建访问密钥</b
+                  ><small data-i18n="stepKeysDesc"
+                    >为你的客户端分配独立凭证</small
+                  >
+                </div></button
+              ><button data-go="api">
+                <span>03</span>
+                <div>
+                  <b data-i18n="stepConnect">复制地址并连接</b
+                  ><small data-i18n="stepConnectDesc"
+                    >选择协议，检测连接，再开始对话</small
+                  >
+                </div>
+              </button>
+            </article>
+          </div>
+          <article class="workbench-card recent-card">
+            <div class="card-heading">
+              <h3 data-i18n="recentRequests">最近调用</h3>
+              <button class="btn-link" data-go="logs" data-i18n="viewAll">
+                查看全部
+              </button>
+            </div>
+            <div id="overview-recent"></div>
+          </article>
+        </section>
+        <section class="page hidden pool-page" id="page-pool">
+          <div class="pool-wrap">
+            <!-- Current Account Session Info Banner -->
+            <div id="pool-account-banner" class="pool-account-banner hidden">
+              <div class="banner-header">
+                <div class="banner-title">
+                  <span class="banner-label">Current Account</span>
+                  <span class="banner-email" id="banner-email"></span>
+                </div>
+                <button
+                  id="banner-close"
+                  class="banner-close"
+                  aria-label="关闭"
+                  data-icon-only="x"
+                ></button>
+              </div>
+              <div class="banner-stats">
+                <div class="banner-stat">
+                  <span class="stat-label">Session Used</span>
+                  <span class="stat-value" id="banner-usage">—</span>
+                </div>
+                <div class="banner-stat">
+                  <span class="stat-label">Resets In</span>
+                  <span class="stat-value" id="banner-reset">—</span>
+                </div>
+                <div class="banner-stat">
+                  <span class="stat-label">Status</span>
+                  <span class="stat-value" id="banner-status">—</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pool-top">
+              <div class="pool-title">
+                <h1><span data-i18n="poolSelection">选择账号</span></h1>
+                <span class="count" id="pool-count"></span>
+              </div>
+              <div class="pool-top-actions">
+                <button id="btn-pool-refresh" class="btn">
+                  <span data-ui-icon="refresh"></span>
+                  <span data-i18n="refresh">刷新</span>
+                </button>
+                <button id="btn-pool-random" class="btn">
+                  <span data-ui-icon="arrow"></span>
+                  <span data-i18n="randomAccount">随机账号</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="pool-filter">
+              <input
+                id="pool-search"
+                class="search-inp"
+                type="search"
+                placeholder="搜索账号"
+                data-i18n-placeholder="searchAccount"
+              /><button
+                id="btn-pool-favorites"
+                class="btn"
+                aria-pressed="false"
+                data-i18n="favoritesOnly"
+              >
+                只看常用
+              </button>
+            </div>
+            <div class="pool-grid" id="pool-list"></div>
+            <div class="pager" id="pool-pager"></div>
+          </div>
+        </section>
+        <section class="page" id="page-accounts">
+          <header class="page-head">
+            <h2 data-i18n="accountManagement">账号管理</h2>
+            <div class="stats" id="stats"></div>
+          </header>
+
+          <div class="toolbar">
+            <button id="btn-refresh" class="btn" data-i18n="refresh">
+              刷新
+            </button>
+            <button id="btn-refresh-all" class="btn" data-i18n="refreshAll">
+              一键刷新
+            </button>
+            <button
+              id="btn-import"
+              class="btn btn-primary"
+              data-i18n="batchImport"
+            >
+              批量导入
+            </button>
+            <button id="btn-del-expired" class="btn" data-i18n="deleteExpired">
+              删除失效
+            </button>
+          </div>
+          <div id="refresh-all-progress" class="task-progress hidden">
+            <div>
+              <span data-i18n="refreshing">正在刷新账号</span
+              ><span class="task-progress-text"></span>
+            </div>
+            <progress value="0" max="1"></progress>
+          </div>
+          <div class="model-strip">
+            <div class="model-strip-title" data-i18n="systemModels">
+              系统可用模型
+            </div>
+            <div class="model-list" id="account-models">加载中…</div>
+          </div>
+          <div class="filterbar">
+            <div class="tabs" id="status-tabs">
+              <button class="tab active" data-status="all">
+                <span data-i18n="allAccounts">全部</span>
+                <span class="cnt" id="cnt-all">0</span>
+              </button>
+              <button class="tab" data-status="active">
+                <span data-i18n="activeAccounts">正常</span>
+                <span class="cnt" id="cnt-active">0</span>
+              </button>
+              <button class="tab" data-status="expired">
+                <span data-i18n="expiredAccounts">已失效</span>
+                <span class="cnt" id="cnt-expired">0</span>
+              </button>
+              <button class="tab" data-status="error">
+                <span data-i18n="errorAccounts">错误</span>
+                <span class="cnt" id="cnt-error">0</span>
+              </button>
+              <button class="tab" data-status="unknown">
+                <span data-i18n="unknownAccounts">未查询</span>
+                <span class="cnt" id="cnt-unknown">0</span>
+              </button>
+            </div>
+            <div class="filter-right">
+              <input
+                id="search"
+                type="search"
+                placeholder="搜索邮箱 / 组织…"
+                class="search-inp"
+              />
+            </div>
+          </div>
+
+          <div class="table-area">
+            <table class="acc-table">
+              <thead>
+                <tr>
+                  <th class="col-idx">#</th>
+                  <th data-i18n="email">邮箱</th>
+                  <th data-i18n="status">状态</th>
+                  <th data-i18n="sessionLimit">会话限额</th>
+                  <th data-i18n="resetTime">重置时间</th>
+                  <th data-i18n="createdDate">创建日期</th>
+                  <th data-i18n="aliveFor">已存活</th>
+                  <th data-i18n="lastRefresh">上次刷新</th>
+                  <th class="col-act" data-i18n="actions">操作</th>
+                </tr>
+              </thead>
+              <tbody id="acc-body">
+                <tr>
+                  <td colspan="9" class="empty" data-i18n="loading">加载中…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-foot">
+            <div class="pager" id="pager"></div>
+            <label class="inline"
+              >每页
+              <select id="page-size" class="sel">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+          </div>
+        </section>
+        <section class="page hidden" id="page-keys">
+          <header class="page-head">
+            <h2 data-i18n="keyManagement">密钥管理</h2>
+          </header>
+
+          <div class="form-block">
+            <div class="block-title" data-i18n="poolAccessKey">
+              号池访问密钥
+            </div>
+            <p class="block-desc">
+              <span data-i18n="keyDescription">前端号池页面需在请求头带</span>
+              <code
+                >Authorization: Bearer &lt;<span data-i18n="keyValue">密钥</span
+                >&gt;</code
+              >
+              <span data-i18n="keyNote"
+                >才能访问；管理员密码也可用于后台联调和号池访问。</span
+              >
+            </p>
+            <div class="key-new">
+              <input
+                id="key-name"
+                type="text"
+                class="inp"
+                placeholder="备注名称（可选）"
+              />
+              <input
+                id="key-value"
+                type="text"
+                class="inp"
+                placeholder="自定义密钥，留空则随机生成"
+              />
+              <button
+                id="btn-key-create"
+                class="btn btn-primary"
+                data-i18n="createKey"
+              >
+                新建密钥
+              </button>
+            </div>
+            <table class="acc-table" style="margin-top: 16px">
+              <thead>
+                <tr>
+                  <th class="col-idx">#</th>
+                  <th data-i18n="keyName">备注</th>
+                  <th data-i18n="keyValue">密钥</th>
+                  <th data-i18n="createdTime">创建时间</th>
+                  <th class="col-act" data-i18n="actions">操作</th>
+                </tr>
+              </thead>
+              <tbody id="keys-body">
+                <tr>
+                  <td colspan="5" class="empty" data-i18n="loading">加载中…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="page hidden" id="page-api">
+          <header class="page-head">
+            <div>
+              <h2 data-i18n="apiTitle">API 文档</h2>
+            </div>
+          </header>
+
+          <article class="connection-card">
+            <div class="card-heading">
+              <div>
+                <div class="eyebrow">接入客户端</div>
+                <h3 data-i18n="connectionTitle">把正确的地址交给客户端</h3>
+              </div>
+              <button
+                id="btn-diagnose"
+                class="btn btn-primary"
+                data-i18n="diagnose"
+              >
+                检测连接
+              </button>
+            </div>
+            <div class="connection-fields">
+              <label
+                ><span data-i18n="serviceAddress">服务地址</span
+                ><input
+                  class="inp"
+                  id="connection-input"
+                  aria-label="服务地址"
+                  placeholder="http://127.0.0.1:8787"
+                  spellcheck="false" /></label
+              ><label
+                ><span data-i18n="clientProtocol">客户端协议</span
+                ><select class="inp" id="connection-protocol">
+                  <option value="openai">OpenAI · Chat Completions</option>
+                  <option value="responses">OpenAI · Responses</option>
+                  <option value="anthropic">Anthropic · Messages</option>
+                </select></label
+              >
+            </div>
+            <div class="connection-output">
+              <div>
+                <span data-i18n="clientAddress">接口地址</span
+                ><code id="connection-base"></code>
+              </div>
+              <button
+                class="btn"
+                data-copy-target="connection-base"
+                data-copyword
+              >
+                复制
+              </button>
+            </div>
+            <div class="connection-output">
+              <div>
+                <span data-i18n="fullEndpoint">完整请求地址</span
+                ><code id="connection-endpoint"></code>
+              </div>
+              <button
+                class="btn"
+                data-copy-target="connection-endpoint"
+                data-copyword
+              >
+                复制
+              </button>
+            </div>
+            <p class="connection-tip" data-i18n="connectionTip">
+              地址必须包含 http:// 或 https://。OpenAI SDK 的 Base URL 填到
+              /v1；要求完整接口地址的客户端才填 /chat/completions。手机上的
+              127.0.0.1 指向手机自身，请改用服务器的局域网 IP 或域名。
+            </p>
+            <p id="connection-error" role="alert"></p>
+            <p id="diagnostic-result" role="status" aria-live="polite"></p>
+            <details class="snippet-details">
+              <summary data-i18n="sdkExample">查看 Python SDK 配置示例</summary>
+              <button
+                class="btn snippet-copy"
+                data-copy-target="connection-snippet"
+                data-copyword
+              >
+                复制
+              </button>
+              <pre id="connection-snippet"></pre>
+            </details>
+          </article>
+          <details class="api-reference">
+            <summary data-i18n="referenceDocs">接口说明</summary>
+            <div class="api-docs">
+              <aside class="api-nav">
+                <div class="api-nav-title" data-i18n="apiDirectory">
+                  接口目录
+                </div>
+                <a href="#api-overview" data-i18n="apiOverview">快速开始</a>
+                <a href="#api-chat" data-i18n="apiChat"
+                  >POST /chat/completions</a
+                >
+                <a href="#api-responses" data-i18n="apiResponses"
+                  >POST /responses</a
+                >
+                <a href="#api-messages" data-i18n="apiMessages"
+                  >POST /messages</a
+                >
+                <a href="#api-models" data-i18n="apiModels">GET /models</a>
+              </aside>
+              <div class="api-content">
+                <article class="api-card" id="api-overview">
+                  <div class="api-kicker">QUICK START</div>
+                  <h3 data-i18n="unifiedInterface">统一接口说明</h3>
+                  <p data-i18n="apiInterfaceDesc">
+                    兼容 OpenAI、Anthropic
+                    客户端，服务会自动轮询号池账号并在失败时切换。
+                  </p>
+                  <div class="api-meta">
+                    <span data-i18n="baseURL">Base URL</span
+                    ><code id="api-base">—</code>
+                  </div>
+                  <div class="api-meta">
+                    <span data-i18n="openaiAuth">OpenAI 鉴权</span
+                    ><code
+                      >Authorization: Bearer &lt;<span data-i18n="poolKey"
+                        >号池密钥</span
+                      >&gt;</code
+                    >
+                  </div>
+                  <div class="api-meta">
+                    <span data-i18n="anthropicAuth">Anthropic 鉴权</span
+                    ><code
+                      >x-api-key: &lt;<span data-i18n="poolKey">号池密钥</span
+                      >&gt;</code
+                    >
+                  </div>
+                  <p class="api-note">
+                    <span data-i18n="modelThinkingNote">模型支持</span>
+                    <code>-thinking</code>
+                    <span data-i18n="thinkingSuffix"
+                      >后缀开启扩展思考，例如</span
+                    >
+                    <code>claude-sonnet-4-6-thinking</code>。
+                  </p>
+                </article>
+                <article class="api-card" id="api-chat">
+                  <div class="api-route">
+                    <span class="method post">POST</span
+                    ><code>/v1/chat/completions</code>
+                  </div>
+                  <p data-i18n="apiChatDesc">
+                    OpenAI Chat Completions 兼容接口，支持流式输出。
+                  </p>
+                  <h4 data-i18n="requestParams">请求参数</h4>
+                  <div class="api-params">
+                    <b>model</b
+                    ><span
+                      ><span data-i18n="stringType">string</span> ·
+                      <span data-i18n="required">必填</span></span
+                    ><em data-i18n="modelName">模型名称</em><b>messages</b
+                    ><span
+                      ><span data-i18n="arrayType">array</span> ·
+                      <span data-i18n="required">必填</span></span
+                    ><em data-i18n="messagesArray">角色与内容数组</em
+                    ><b>stream</b
+                    ><span
+                      ><span data-i18n="booleanType">boolean</span> ·
+                      <span data-i18n="optional">可选</span></span
+                    ><em data-i18n="streamResponse">是否以 SSE 流式返回</em
+                    ><b>temperature</b
+                    ><span
+                      ><span data-i18n="numberType">number</span> ·
+                      <span data-i18n="optional">可选</span></span
+                    ><em data-i18n="temperature">采样温度</em>
+                  </div>
+                  <h4 data-i18n="response">响应</h4>
+                  <pre>
+{ "id": "chatcmpl-...", "choices": [{ "message": { "role": "assistant", "content": "..." } }] }</pre
+                  >
+                </article>
+                <article class="api-card" id="api-responses">
+                  <div class="api-route">
+                    <span class="method post">POST</span
+                    ><code>/v1/responses</code>
+                  </div>
+                  <p data-i18n="apiResponsesDesc">
+                    OpenAI Responses API 兼容接口，适用于新一代 OpenAI SDK。
+                  </p>
+                  <h4 data-i18n="requestParams">请求参数</h4>
+                  <div class="api-params">
+                    <b>model</b
+                    ><span
+                      ><span data-i18n="stringType">string</span> ·
+                      <span data-i18n="required">必填</span></span
+                    ><em data-i18n="modelName">模型名称</em><b>input</b
+                    ><span
+                      ><span data-i18n="stringType">string</span> /
+                      <span data-i18n="arrayType">array</span> ·
+                      <span data-i18n="required">必填</span></span
+                    ><em data-i18n="userInput">用户输入内容</em><b>stream</b
+                    ><span
+                      ><span data-i18n="booleanType">boolean</span> ·
+                      <span data-i18n="optional">可选</span></span
+                    ><em data-i18n="streamResponse">是否流式返回</em>
+                  </div>
+                  <h4 data-i18n="response">响应</h4>
+                  <pre>
+{ "id": "resp_...", "object": "response", "output": [{ "type": "message", "content": [{ "text": "..." }] }] }</pre
+                  >
+                </article>
+                <article class="api-card" id="api-messages">
+                  <div class="api-route">
+                    <span class="method post">POST</span
+                    ><code>/v1/messages</code>
+                  </div>
+                  <p>Anthropic Messages 兼容接口，可直接复用 Claude SDK。</p>
+                  <h4>请求参数</h4>
+                  <div class="api-params">
+                    <b>model</b><span>string · 必填</span><em>模型名称</em
+                    ><b>max_tokens</b><span>integer · 必填</span
+                    ><em>最大输出 token 数</em><b>messages</b
+                    ><span>array · 必填</span><em>对话消息数组</em><b>stream</b
+                    ><span>boolean · 可选</span><em>是否流式返回</em>
+                  </div>
+                  <h4>响应</h4>
+                  <pre>
+{ "id": "msg_...", "type": "message", "role": "assistant", "content": [{ "type": "text", "text": "..." }] }</pre
+                  >
+                </article>
+                <article class="api-card" id="api-models">
+                  <div class="api-route">
+                    <span class="method get">GET</span><code>/v1/models</code>
+                  </div>
+                  <p>获取当前服务可用的模型列表。</p>
+                  <h4>请求参数</h4>
+                  <div class="api-params">
+                    <b>无</b><span>—</span><em>仅需携带鉴权请求头</em>
+                  </div>
+                  <h4>响应</h4>
+                  <pre>
+{ "object": "list", "data": [{ "id": "claude-sonnet-4-5", "object": "model" }] }</pre
+                  >
+                </article>
+              </div>
+            </div>
+          </details>
+        </section>
+        <section class="page hidden" id="page-chat">
+          <header class="page-head">
+            <div>
+              <h2 data-i18n="chatTest">对话测试</h2>
+              <p class="page-desc" data-i18n="chatTestDesc">
+                支持多轮对话、流式输出和图片上传
+              </p>
+            </div>
+          </header>
+          <div class="chat-layout">
+            <div class="chat-main">
+              <div id="chat-messages" class="chat-messages">
+                <div class="chat-empty" data-i18n="startNewChat">
+                  开始一段新的对话吧
+                </div>
+              </div>
+              <div class="chat-composer">
+                <div id="chat-attachments" class="chat-attachments"></div>
+                <textarea
+                  id="test-message"
+                  class="inp chat-input"
+                  rows="3"
+                  placeholder="输入消息，按 Enter 发送，Shift + Enter 换行…"
+                ></textarea>
+                <div class="chat-actions">
+                  <div class="chat-tools">
+                    <select
+                      id="test-protocol"
+                      class="inp sel chat-protocol-select"
+                      aria-label="对话接口"
+                    >
+                      <option value="openai">OpenAI Chat</option>
+                      <option value="anthropic">Anthropic</option>
+                      <option value="responses">Responses</option>
+                    </select>
+                    <label class="stream-toggle"
+                      ><input id="test-stream" type="checkbox" checked /><span
+                        data-i18n="streamDisplay"
+                        >逐字显示</span
+                      ></label
+                    >
+                    <select id="test-model" class="inp sel chat-model-select">
+                      <option value="">加载模型中…</option>
+                    </select>
+                    <label class="btn chat-upload"
+                      >图片
+                      <input
+                        id="chat-image"
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        hidden
+                      />
+                    </label>
+                    <button id="btn-chat-clear" class="btn">清空</button>
+                    <span class="cfg-hint" id="test-hint"></span>
+                  </div>
+                  <button
+                    id="btn-chat-stop"
+                    class="btn hidden"
+                    type="button"
+                    data-i18n="stopGeneration"
+                  >
+                    停止生成</button
+                  ><button id="btn-test-send" class="btn btn-primary">
+                    发送
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="page hidden" id="page-logs">
+          <header class="page-head">
+            <div>
+              <h2 data-i18n="logs">调用日志</h2>
+            </div>
+            <div class="stats" id="logs-stats"></div>
+          </header>
+
+          <div class="toolbar">
+            <button id="btn-logs-refresh" class="btn" data-i18n="refresh">
+              刷新
+            </button>
+            <button
+              id="btn-logs-delete"
+              class="btn"
+              data-i18n="deleteSelected"
+              disabled
+            >
+              删除选中
+            </button>
+            <div class="logs-keep">
+              <span data-i18n="keep">仅保留最近</span>
+              <input id="logs-keep" type="number" min="0" value="100" />
+              <span data-i18n="items">条</span>
+              <button id="btn-logs-trim" class="btn" data-i18n="clean">
+                清理
+              </button>
+            </div>
+          </div>
+
+          <div class="table-area">
+            <table class="acc-table log-table">
+              <thead>
+                <tr>
+                  <th>
+                    <input
+                      id="logs-check-all"
+                      type="checkbox"
+                      aria-label="全选本页"
+                    />
+                  </th>
+                  <th data-i18n="time">时间</th>
+                  <th data-i18n="request">请求</th>
+                  <th data-i18n="account">账号</th>
+                  <th data-i18n="statusCode">状态</th>
+                  <th data-i18n="tokens">Token</th>
+                  <th data-i18n="performance">性能</th>
+                  <th aria-label="操作"></th>
+                </tr>
+              </thead>
+              <tbody id="logs-body">
+                <tr>
+                  <td colspan="8" class="empty" data-i18n="loading">加载中…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-foot">
+            <div class="pager" id="logs-pager"></div>
+            <label class="inline"
+              ><span data-i18n="perPage">每页</span>
+              <select id="logs-page-size" class="sel">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+            </label>
+          </div>
+        </section>
+        <section class="page hidden log-detail-page" id="page-log-detail">
+          <header class="log-detail-page-head">
+            <button id="log-detail-back" class="btn-link log-detail-back">
+              <span data-ui-icon="arrow" class="back-icon"></span> 调用日志
+            </button>
+            <h2 id="log-detail-title">调用详情</h2>
+          </header>
+          <div id="log-detail-body"></div>
+        </section>
+        <section class="page hidden" id="page-system">
+          <header class="page-head">
+            <h2 data-i18n="systemSettings">系统管理</h2>
+          </header>
+
+          <div class="form-block">
+            <div class="settings-section">
+              <div class="block-title" data-i18n="basicConfig">基础配置</div>
+              <div class="settings-grid">
+                <label class="field"
+                  ><span data-i18n="outboundProxy">出口代理</span>
+                  <input
+                    id="cfg-proxy"
+                    type="text"
+                    placeholder="留空直连，如 socks5h://user:pass@host:port"
+                    class="inp"
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="block-title" data-i18n="apiConfig">API 配置</div>
+              <div class="settings-grid">
+                <label class="field"
+                  ><span data-i18n="retryCount">换号重试次数</span>
+                  <input
+                    id="cfg-retry_count"
+                    type="number"
+                    min="0"
+                    max="8"
+                    placeholder="0"
+                    class="inp"
+                  />
+                </label>
+                <label class="field"
+                  ><span data-i18n="contextThreshold"
+                    >超长上下文阈值（字符）</span
+                  >
+                  <input
+                    id="cfg-max_chat_history_length"
+                    type="number"
+                    min="1"
+                    class="inp"
+                  />
+                </label>
+                <label class="field"
+                  ><span data-i18n="deleteChat">用完自动删会话</span>
+                  <select id="cfg-chat_delete" class="inp sel">
+                    <option value="true" data-i18n="yes">是</option>
+                    <option value="false" data-i18n="no">否</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="block-title" data-i18n="protectionTitle">
+                请求保护
+              </div>
+              <p class="block-desc" data-i18n="protectionDesc">
+                同一账号一次只发一条请求，受限后自动休息。
+              </p>
+              <div class="settings-grid">
+                <label class="field"
+                  ><span data-i18n="requestInterval">请求间隔，秒</span
+                  ><input
+                    id="cfg-request_interval_seconds"
+                    class="inp"
+                    type="number"
+                    min="0"
+                    max="60" /></label
+                ><label class="field"
+                  ><span data-i18n="cooldownSeconds">受限后至少休息，秒</span
+                  ><input
+                    id="cfg-account_cooldown_seconds"
+                    class="inp"
+                    type="number"
+                    min="60"
+                    max="86400"
+                /></label>
+              </div>
+            </div>
+            <div class="settings-section">
+              <div class="block-title" data-i18n="statusMonitoring">
+                状态监测
+              </div>
+              <p class="block-desc" data-i18n="statusMonitoringDesc">
+                后台会定时查询每个账号，更新账号状态并处理已失效账号。
+              </p>
+              <div class="settings-grid">
+                <label class="field"
+                  ><span data-i18n="refreshInterval">刷新间隔（秒）</span>
+                  <input
+                    id="cfg-status_check_interval_seconds"
+                    type="number"
+                    min="1"
+                    class="inp"
+                    placeholder="21600"
+                  />
+                </label>
+                <label class="field"
+                  ><span data-i18n="removeInvalidAccount"
+                    >会话失效时移除账号</span
+                  >
+                  <select id="cfg-remove_invalid_account" class="inp sel">
+                    <option value="false" data-i18n="no">否</option>
+                    <option value="true" data-i18n="yes">是</option>
+                  </select>
+                </label>
+                <label class="field"
+                  ><span data-i18n="detailedLogging">记录详细请求日志</span>
+                  <select id="cfg-detailed_api_log" class="inp sel">
+                    <option value="false" data-i18n="detailedLoggingNo">
+                      否，仅记录指标
+                    </option>
+                    <option value="true" data-i18n="detailedLoggingYes">
+                      是，记录请求与输出
+                    </option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button
+                id="btn-cfg-save"
+                class="btn btn-primary"
+                data-i18n="save"
+              >
+                保存设置
+              </button>
+              <span class="cfg-hint" data-i18n="noRestart"
+                >保存后即时生效，无需重启</span
+              >
+            </div>
+          </div>
+        </section>
+      </main>
+      <div id="confirm-mask" class="modal-mask hidden">
+        <div class="modal">
+          <div class="modal-title" id="confirm-title" data-i18n="confirm">
+            确认操作
+          </div>
+          <div class="modal-body" id="confirm-body"></div>
+          <div class="modal-actions">
+            <button id="confirm-cancel" class="btn" data-i18n="cancel">
+              取消
+            </button>
+            <button
+              id="confirm-ok"
+              class="btn btn-danger-solid"
+              data-i18n="delete"
+            >
+              确认删除
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="detail-mask" class="modal-mask hidden">
+        <div class="modal modal-lg">
+          <div class="modal-head">
+            <div class="modal-title" id="detail-title">账号详情</div>
+            <button
+              data-icon-only="x"
+              id="detail-close"
+              class="btn-link modal-x"
+              aria-label="关闭账号详情"
+            >
+              <span data-ui-icon="x"></span>
+            </button>
+          </div>
+          <div class="modal-body detail-body" id="detail-body"></div>
+        </div>
+      </div>
+
+      <div id="pool-key-mask" class="modal-mask hidden">
+        <div class="modal">
+          <div class="modal-head">
+            <div>
+              <div class="modal-title">访问密钥</div>
+              <div class="modal-sub">请输入号池访问密钥后继续</div>
+            </div>
+          </div>
+          <div class="modal-body pool-key-form">
+            <input
+              id="pool-key-input"
+              type="password"
+              class="inp"
+              placeholder="Bearer 密钥"
+              autocomplete="off"
+            />
+            <button id="pool-key-submit" class="btn btn-primary">确定</button>
+            <div id="pool-key-err" class="key-err"></div>
+          </div>
+        </div>
+      </div>
+      <div id="import-mask" class="modal-mask hidden">
+        <div class="modal modal-lg">
+          <div class="modal-head">
+            <div class="modal-title" data-i18n="batchImportTitle">
+              批量导入 sessionKey
+            </div>
+            <button
+              data-icon-only="x"
+              id="import-close"
+              class="btn-link modal-x"
+              aria-label="关闭导入窗口"
+            >
+              <span data-ui-icon="x"></span>
+            </button>
+          </div>
+          <div class="modal-body detail-body">
+            <p class="block-desc" data-i18n="batchImportDesc">
+              每行一个 sessionKey，导入时会自动查询邮箱和组织 UUID。
+            </p>
+            <div id="import-progress" class="task-progress hidden">
+              <div>
+                <span data-i18n="importing">正在导入账号</span
+                ><span class="task-progress-text"></span>
+              </div>
+              <progress value="0" max="1"></progress>
+            </div>
+            <textarea
+              id="import-keys"
+              class="inp"
+              rows="8"
+              placeholder="每行粘贴一个 sessionKey"
+            ></textarea>
+            <div class="modal-actions">
+              <button id="btn-import-cancel" class="btn" data-i18n="cancel">
+                取消
+              </button>
+              <button
+                id="btn-import-submit"
+                class="btn btn-primary"
+                data-i18n="startImport"
+              >
+                开始导入
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/static/ui-vendor.js"></script>
+    <script src="/static/i18n.js"></script>
+    <script src="/static/connection.js"></script>
+    <script src="/static/stream.js"></script>
+    <script src="/static/workbench.js"></script>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

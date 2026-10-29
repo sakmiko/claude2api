@@ -1,0 +1,402 @@
+{
+  "project": "claude2api",
+  "date": "2026-10-28",
+  "source_commit": "fb32922cfbe32deadae7b52498f51f7a4b406bf1",
+  "files": [
+    {
+      "path": ".dockerignore",
+      "size": 91,
+      "sha256": "1166642a268019ff4c95b3aa5738160e292803cebb866225c11243a76b828517"
+    },
+    {
+      "path": ".github/workflows/docker-image.yml",
+      "size": 1358,
+      "sha256": "b60a8a1859ecc1d43befdb411cd33ff92e1d161d25697444c03a0b960a865d66"
+    },
+    {
+      "path": ".github/workflows/test.yml",
+      "size": 631,
+      "sha256": "b26b085aab7d57ee31390ca91f5e92129ea00c1c87994ea392f8db995ecda139"
+    },
+    {
+      "path": ".gitignore",
+      "size": 649,
+      "sha256": "e15820641173cf0e17e30d1ddf6743aceb5e732633c64d0b115e0cc1e8b6454c"
+    },
+    {
+      "path": "Dockerfile",
+      "size": 430,
+      "sha256": "b3b3fdbc67271137a4aca75d67b5c25da5067fcb101f79926e639d89153e985a"
+    },
+    {
+      "path": "LICENSE",
+      "size": 1067,
+      "sha256": "4a3ea42531a7fc18b11471baa1676b11ef6c8badee4e02711392d9fdc8f59d58"
+    },
+    {
+      "path": "README.md",
+      "size": 10469,
+      "sha256": "1568290e5082b00fdb39b887aaa67a5dcfc1eddb1350cbb5a2669affdfc3f3ba"
+    },
+    {
+      "path": "SECURITY.md",
+      "size": 3698,
+      "sha256": "23a3a8cc1f6fcac44ba033b1662883bac8d263966242920e513f78c15b5eadc5"
+    },
+    {
+      "path": "START_HERE.md",
+      "size": 2208,
+      "sha256": "7cf8162594a1408c097468d6e635e0dc51c6b474e20cfbd8177a68f142a704a6"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "size": 6692,
+      "sha256": "5af54c223a00f10197e58101893101b8eb7c4e7af1febfe7bfc6c16625ec50d7"
+    },
+    {
+      "path": "cmd/server/main.go",
+      "size": 371,
+      "sha256": "926e210d0e38d05d92fbfb50e9b31756f3dbfca63343f410d1648f0c39c5e005"
+    },
+    {
+      "path": "config.example.yaml",
+      "size": 674,
+      "sha256": "d2c0b5515c3d7337b95be59dd97869d2312ea2eba4aed810a088a183eb7cba53"
+    },
+    {
+      "path": "docker-compose.local.yml",
+      "size": 258,
+      "sha256": "035790308b622847ffe95d6ba60d05eee047dc6f342cf7aa2d45b57d10458ae1"
+    },
+    {
+      "path": "docker-compose.yml",
+      "size": 232,
+      "sha256": "2df8950667c6719535f515095a8cb48ed856c83c79020280007898a2ed018b54"
+    },
+    {
+      "path": "docs/CLIENT_SETUP.md",
+      "size": 3030,
+      "sha256": "a17cd3f9cedaadff1e4a1c71dd9ed0ffa53de14f5a2802a3cfc981e0206a6021"
+    },
+    {
+      "path": "docs/FINAL_HANDOFF.md",
+      "size": 1987,
+      "sha256": "fe586f1fec408f6c375923e404c956ad7f56a2061002274987aee81da0abfeb4"
+    },
+    {
+      "path": "docs/LOCAL_REVIEW.md",
+      "size": 5638,
+      "sha256": "484ca331f0d1a5bf7910ba7fc521acc4596a5f446d1416511b4ffd7a0fe81401"
+    },
+    {
+      "path": "docs/PROJECT_COMPARISON.md",
+      "size": 5383,
+      "sha256": "d4fbe2d88cd74e10f59bfd9b86b11c7a83b238e09dfaecc50443d560e16c13a1"
+    },
+    {
+      "path": "docs/STREAMING_REVIEW.md",
+      "size": 3764,
+      "sha256": "bbb1de55b87e50e663aba4634e4eaa748b3fc286f02f82771492523db14becba"
+    },
+    {
+      "path": "docs/browser-review-results.json",
+      "size": 4548,
+      "sha256": "37d7710602dbc4eb5bf875fe915090d2742854b26a44dbb4849b0eeb5c20b2b9"
+    },
+    {
+      "path": "go.mod",
+      "size": 3202,
+      "sha256": "7ff50e8e1e7143eedc2755cbdc852df99c08d9eb5eb65ba20c9b4b85c0068166"
+    },
+    {
+      "path": "go.sum",
+      "size": 19350,
+      "sha256": "670129c7811bc42a8039217b8eff5f05acec4e514056d39993e69ae8078fdc52"
+    },
+    {
+      "path": "internal/adapter/anthropic_messages.go",
+      "size": 11017,
+      "sha256": "3ed249d5e1bcc5ab8f3c4661cc9e7fd74b161f45885d02e4b37c21dd637db3e0"
+    },
+    {
+      "path": "internal/adapter/api_test.go",
+      "size": 10755,
+      "sha256": "2f58d26346d2d6aa53319b704c6ed516c3a1da92b47e567101289a1d77d1f8ef"
+    },
+    {
+      "path": "internal/adapter/image.go",
+      "size": 3982,
+      "sha256": "bf1f60a5c9ef2b1265cd311fac7affefb639fb991ac8724f27f109c93d4b0a9e"
+    },
+    {
+      "path": "internal/adapter/image_test.go",
+      "size": 333,
+      "sha256": "50b5c92ed0c84efb0435c4623f054de6b97b7d4001113df40b64dc915adddeab"
+    },
+    {
+      "path": "internal/adapter/openai_chat.go",
+      "size": 8782,
+      "sha256": "e9ad64d4ad6869e852760e090281811e2e9493d81c28db64eeaf26fdf53b5e6e"
+    },
+    {
+      "path": "internal/adapter/openai_responses.go",
+      "size": 15013,
+      "sha256": "c2ea3a541f286fe5c2f8cb3bc6448e160e85b7d8b7f78000c65016fa76751444"
+    },
+    {
+      "path": "internal/adapter/pipeline.go",
+      "size": 9347,
+      "sha256": "3cd45fc84dd4025a6f1d9f091130bab2e09fe101576e92ce4b71da167fa0e88e"
+    },
+    {
+      "path": "internal/adapter/sdk_integration_test.go",
+      "size": 4679,
+      "sha256": "f6f13781c51841d6d8d0692a67a631f5a339b08e8f4848d230a9894ab190bfe8"
+    },
+    {
+      "path": "internal/adapter/stream_test.go",
+      "size": 4581,
+      "sha256": "8d59d5db26197e83e24cc5dd489402b172b7f81cbc2f7628d47268926c4d3d6c"
+    },
+    {
+      "path": "internal/adapter/tagged.go",
+      "size": 15873,
+      "sha256": "f9517f3c6fe1ca4876db8f0e8aff1b8b8e5ad13c1e3abcf73ca287a8acce6350"
+    },
+    {
+      "path": "internal/adapter/tagged_test.go",
+      "size": 3619,
+      "sha256": "6748db953f82b69a257d084eb5318ed010aa222d65a17f755a5befff127cabc8"
+    },
+    {
+      "path": "internal/adapter/tool.go",
+      "size": 5784,
+      "sha256": "c11c45f992e5601f16459a4b2c9e4a69215d7df52c5db0c042e602888fffeb4f"
+    },
+    {
+      "path": "internal/config/config.go",
+      "size": 6884,
+      "sha256": "a85037f2f0c846542207beaaf230d2a3aee6b5556ec7cea627ae933d7d79cab6"
+    },
+    {
+      "path": "internal/config/config_test.go",
+      "size": 2210,
+      "sha256": "2e9913f39b950ad367cdb7fc2535478082f2497dd630419a8afdc92deabe6291"
+    },
+    {
+      "path": "internal/handler/admin.go",
+      "size": 9469,
+      "sha256": "c81396dbe48a8c899288cb6b6364c9c3f6f5910af096f88785bfd3d021b1e517"
+    },
+    {
+      "path": "internal/handler/auth.go",
+      "size": 807,
+      "sha256": "cbe30d386c20324447fa2868c534356bbbb548957dfd42297fcf2472996ece0c"
+    },
+    {
+      "path": "internal/handler/pool.go",
+      "size": 2496,
+      "sha256": "6c48637c242e2ad0d8267f8e166adde0598b47939ed68513be920f76fdec48dc"
+    },
+    {
+      "path": "internal/handler/proxy.go",
+      "size": 24356,
+      "sha256": "5af3fd6089105c5c20d25d1eb3fe6bde99eccc785a5508ee59f5a169c1cfc15d"
+    },
+    {
+      "path": "internal/handler/proxy_test.go",
+      "size": 2304,
+      "sha256": "57ac5b9d1264d422c8f74086685adb061fa5c7a6479d6a4ff87ce5b32f2cadd8"
+    },
+    {
+      "path": "internal/middleware/middleware.go",
+      "size": 3428,
+      "sha256": "95de0cfbc20681120e407754b3a33e5e5f6ae9bd13f604cf5bf1dc073dfbd4a6"
+    },
+    {
+      "path": "internal/repository/account.go",
+      "size": 5202,
+      "sha256": "5ef31326f453343e250cd16591910ffecdcf22e2615d2f8e1bf448739ba6cfd2"
+    },
+    {
+      "path": "internal/repository/account_test.go",
+      "size": 2814,
+      "sha256": "07161b85f59a78188b44d43ca46d46b9f3b6ae0f91480c3be108b34ca780173e"
+    },
+    {
+      "path": "internal/repository/apikey.go",
+      "size": 1614,
+      "sha256": "3c0056ea943e645fd5d1fc600c6fedc3687290645002727f6ae8ab87b5fec058"
+    },
+    {
+      "path": "internal/repository/apilog.go",
+      "size": 2779,
+      "sha256": "cf7a717288dc7eb741adee67dc3bed57ce8fdb98faee28969322b403eda498f2"
+    },
+    {
+      "path": "internal/repository/db.go",
+      "size": 1027,
+      "sha256": "19f2fc1573224ae72121bf010463a86339d820ddf780c7538a3cb87bae54f8c9"
+    },
+    {
+      "path": "internal/router/router.go",
+      "size": 5616,
+      "sha256": "dd45029db7d5ac0ade8a1d413ea567199a076de0b6db3302dc930fb1a327e671"
+    },
+    {
+      "path": "internal/router/router_test.go",
+      "size": 3517,
+      "sha256": "8f882ea28457df575cbc0a843e405bcdfc72832c430ee78fbe046c53f981d445"
+    },
+    {
+      "path": "internal/service/account.go",
+      "size": 3935,
+      "sha256": "fb5a2d1846d02e013f5573d269aad04ed3480f9bf3098a42ed6dbee9458d8879"
+    },
+    {
+      "path": "internal/service/claude.go",
+      "size": 16115,
+      "sha256": "5d63f0c1ab881be70339d33128422e92e4246e19ce06d4d08e722e3647ddc577"
+    },
+    {
+      "path": "internal/service/claude_test.go",
+      "size": 2713,
+      "sha256": "a266b18f217cadec12487ca40dabe2dda2d2c7e654c169562f1a0c5eb0c7a7a4"
+    },
+    {
+      "path": "internal/service/dispatcher.go",
+      "size": 6689,
+      "sha256": "54729ad3cf69c0679034d400e9c2eefdcc5ec9cb6d1151570c3c8d6bf7744da5"
+    },
+    {
+      "path": "internal/service/gate.go",
+      "size": 3750,
+      "sha256": "28f9cb0e31d9679b00999d29609e362481e0d09c14f5d8d95a982c760c76bd7f"
+    },
+    {
+      "path": "internal/service/gate_test.go",
+      "size": 3338,
+      "sha256": "d5ee9ba6e5138183d9af2f5370d6eaa1d1de1fe7a703bae0c6ff7ed160c99feb"
+    },
+    {
+      "path": "internal/service/headers.go",
+      "size": 1415,
+      "sha256": "f4473132882878d2d21a11a52e67fccd630fc4b23b16c85e3d3e12bf54770232"
+    },
+    {
+      "path": "internal/service/proxy.go",
+      "size": 1606,
+      "sha256": "0c7e4b95247c61a68ddd7b01e235626f2995cd8fc12449e43d37c603dae6e59a"
+    },
+    {
+      "path": "internal/service/types.go",
+      "size": 1726,
+      "sha256": "459c6e47ae6287efee4d099b891d20020ed81d937e858b9e36bc2e3c255b347a"
+    },
+    {
+      "path": "internal/utils/utils.go",
+      "size": 137,
+      "sha256": "8b28cd3f32ba74ac7312a623b044b02c2429474fc8b38b43ac5e73ece0f9ed04"
+    },
+    {
+      "path": "package-lock.json",
+      "size": 15877,
+      "sha256": "c5f3b01f9d61c03018894a51fa9a349276492d395c9489360a4c6c11ac980e33"
+    },
+    {
+      "path": "package.json",
+      "size": 293,
+      "sha256": "2f87b742c70dc8a3776c01361ab67a57af79e16c3f1d4fb96ed5b0733673b34e"
+    },
+    {
+      "path": "scripts/build-ui.mjs",
+      "size": 802,
+      "sha256": "d4a13914b44cc39ee4431bb61ff0acaf86931f0f9b111e3e6ca37a1de9679fef"
+    },
+    {
+      "path": "scripts/review-ui.cjs",
+      "size": 21629,
+      "sha256": "104ebdabf61379787e3763c131d98bab5d7d3e247315786ad45616fb4b471e59"
+    },
+    {
+      "path": "scripts/seed-review.py",
+      "size": 2389,
+      "sha256": "9c0816d0643187e5df3e2244dee59d546b595d8d580bc12a1968ca02afe975fe"
+    },
+    {
+      "path": "tests/connection.test.cjs",
+      "size": 1031,
+      "sha256": "376e1c7e3962779601aecb5120e18289d85fcb937592c591de85a155a0aa3821"
+    },
+    {
+      "path": "tests/stream.test.cjs",
+      "size": 3349,
+      "sha256": "078811bd013f84d76e9be12129854206c34a0388270e4ca5305515a8333eb157"
+    },
+    {
+      "path": "ui/vendor.mjs",
+      "size": 1393,
+      "sha256": "d5e0142ce1112520ff1285244f39025b353b6331e29580147ae5044a45e962af"
+    },
+    {
+      "path": "web/app.js",
+      "size": 77014,
+      "sha256": "cad205d374e33db8e2c8e864c9fd1c37849f3d4d48f8a65537836c5173b8806e"
+    },
+    {
+      "path": "web/claude-style.css",
+      "size": 15504,
+      "sha256": "8441d8b78dddda4171d70597f37553ecc8e6154afc0fa0a12cbcd628239f0b87"
+    },
+    {
+      "path": "web/claude.svg",
+      "size": 1696,
+      "sha256": "a3101f3047a119aa11825ad9369510f0c472428c8c52d420e31bc62db44a8364"
+    },
+    {
+      "path": "web/connection.js",
+      "size": 1249,
+      "sha256": "41ebd6fa187fcecbb588a7f0f45be99431d098a43d20135c77c6a7e1847e31a9"
+    },
+    {
+      "path": "web/embed.go",
+      "size": 117,
+      "sha256": "81a7a67e7c0d91319818f84c4228656e21563b5fdd193974a4f69bced3285182"
+    },
+    {
+      "path": "web/i18n.js",
+      "size": 24568,
+      "sha256": "63a377dca28196aad7573cdc582bc4c0b4a6529110cba2d000c1c07cf65a7dc9"
+    },
+    {
+      "path": "web/index.html",
+      "size": 47555,
+      "sha256": "05d9c9d66a6ef87e73e052cff55f188c7335a041ea0129eaf6d572a4a6412c16"
+    },
+    {
+      "path": "web/stream.js",
+      "size": 6132,
+      "sha256": "d446abda3e6f3e1f8295811dc373f461b1588d379e9279a93862375ebcc3cc4b"
+    },
+    {
+      "path": "web/style.css",
+      "size": 46505,
+      "sha256": "b0db815bd4a0dfb1636ce23bd80cf17f509ed6c86ba6f9925682e3432aa13179"
+    },
+    {
+      "path": "web/ui-vendor.js",
+      "size": 22654,
+      "sha256": "a832b455bc8ad6f11adccd49c0c33bbc8a8e2fb130774b113387d6f01969a009"
+    },
+    {
+      "path": "web/workbench.css",
+      "size": 36613,
+      "sha256": "a22a389f75f46f1ce33c523322d4e527a6af3dfec96e5b7b0463bb39be9e22ed"
+    },
+    {
+      "path": "web/workbench.js",
+      "size": 24468,
+      "sha256": "5dd7ceb4df622b65aef3531bf258e1b34784ba7d90a9f8c278a2f05f6c3aea09"
+    }
+  ]
+}

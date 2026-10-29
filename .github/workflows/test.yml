@@ -1,0 +1,25 @@
+name: Test gateway and client helpers
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: go test -race ./...
+      - run: go vet ./...
+      - run: npm ci --ignore-scripts
+      - run: npm run test:ui
+      - run: npm run build:ui
+      - run: git diff --exit-code -- web/ui-vendor.js THIRD_PARTY_NOTICES.md
+      - run: go build ./cmd/server

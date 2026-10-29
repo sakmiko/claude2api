@@ -1,0 +1,9 @@
+.git
+.idea
+data
+config.yaml
+runtime-config
+node_modules
+review-output
+sessionKey.txt
+*.exe

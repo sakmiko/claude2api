@@ -1,0 +1,227 @@
+{
+  "passed": true,
+  "screenshots": [
+    "01-login",
+    "02-overview",
+    "14-collapsed-sidebar",
+    "15-preferences",
+    "03-accounts",
+    "26-account-details",
+    "04-import-dialog",
+    "05-client-connection",
+    "06-api-keys",
+    "07-account-pool",
+    "13-settings",
+    "08-request-logs",
+    "25-call-details",
+    "09-playground",
+    "10-overview-dark",
+    "16-dark-pool",
+    "17-dark-chat",
+    "11-mobile-overview",
+    "12-mobile-connection",
+    "18-mobile-accounts",
+    "19-mobile-keys",
+    "20-mobile-pool",
+    "21-mobile-logs",
+    "22-mobile-chat",
+    "23-mobile-system",
+    "24-mobile-dark-settings",
+    "responsive-360-overview",
+    "responsive-360-accounts",
+    "responsive-360-chat",
+    "responsive-360-system",
+    "responsive-768-overview",
+    "responsive-768-accounts",
+    "responsive-768-chat",
+    "responsive-768-system",
+    "responsive-1024-overview",
+    "responsive-1024-accounts",
+    "responsive-1024-chat",
+    "responsive-1024-system"
+  ],
+  "errors": [],
+  "visualChecks": [
+    {
+      "page": "01-login",
+      "issues": []
+    },
+    {
+      "page": "02-overview",
+      "issues": []
+    },
+    {
+      "page": "14-collapsed-sidebar",
+      "issues": []
+    },
+    {
+      "page": "15-preferences",
+      "issues": []
+    },
+    {
+      "page": "03-accounts",
+      "issues": []
+    },
+    {
+      "page": "26-account-details",
+      "issues": []
+    },
+    {
+      "page": "04-import-dialog",
+      "issues": []
+    },
+    {
+      "page": "05-client-connection",
+      "issues": []
+    },
+    {
+      "page": "06-api-keys",
+      "issues": []
+    },
+    {
+      "page": "07-account-pool",
+      "issues": []
+    },
+    {
+      "page": "13-settings",
+      "issues": []
+    },
+    {
+      "page": "08-request-logs",
+      "issues": []
+    },
+    {
+      "page": "25-call-details",
+      "issues": []
+    },
+    {
+      "page": "09-playground",
+      "issues": []
+    },
+    {
+      "page": "10-overview-dark",
+      "issues": []
+    },
+    {
+      "page": "16-dark-pool",
+      "issues": []
+    },
+    {
+      "page": "17-dark-chat",
+      "issues": []
+    },
+    {
+      "page": "11-mobile-overview",
+      "issues": []
+    },
+    {
+      "page": "12-mobile-connection",
+      "issues": []
+    },
+    {
+      "page": "18-mobile-accounts",
+      "issues": []
+    },
+    {
+      "page": "19-mobile-keys",
+      "issues": []
+    },
+    {
+      "page": "20-mobile-pool",
+      "issues": []
+    },
+    {
+      "page": "21-mobile-logs",
+      "issues": []
+    },
+    {
+      "page": "22-mobile-chat",
+      "issues": []
+    },
+    {
+      "page": "23-mobile-system",
+      "issues": []
+    },
+    {
+      "page": "24-mobile-dark-settings",
+      "issues": []
+    },
+    {
+      "page": "responsive-360-overview",
+      "issues": []
+    },
+    {
+      "page": "responsive-360-accounts",
+      "issues": []
+    },
+    {
+      "page": "responsive-360-chat",
+      "issues": []
+    },
+    {
+      "page": "responsive-360-system",
+      "issues": []
+    },
+    {
+      "page": "responsive-768-overview",
+      "issues": []
+    },
+    {
+      "page": "responsive-768-accounts",
+      "issues": []
+    },
+    {
+      "page": "responsive-768-chat",
+      "issues": []
+    },
+    {
+      "page": "responsive-768-system",
+      "issues": []
+    },
+    {
+      "page": "responsive-1024-overview",
+      "issues": []
+    },
+    {
+      "page": "responsive-1024-accounts",
+      "issues": []
+    },
+    {
+      "page": "responsive-1024-chat",
+      "issues": []
+    },
+    {
+      "page": "responsive-1024-system",
+      "issues": []
+    }
+  ],
+  "upstreamTested": false,
+  "fixtures": "fictional accounts; controlled SSE for playground",
+  "checks": [
+    "login validation",
+    "account and organization search",
+    "import dialog only; original import implementation preserved",
+    "URL normalization",
+    "same-origin diagnostics",
+    "remote credential protection",
+    "key creation and deletion",
+    "pool-only access and mobile menu",
+    "pool filtering and favorites",
+    "account pause and resume",
+    "request protection settings",
+    "logs",
+    "SSE rendering",
+    "theme",
+    "language",
+    "mobile layout",
+    "mobile menu",
+    "Lucide sidebar icons",
+    "sidebar collapse",
+    "Floating UI preferences",
+    "three chat protocols and JSON/SSE replies",
+    "360, 768 and 1024px responsive layouts",
+    "stream terminal without EOF and reader cancellation",
+    "stream updates preserve existing message DOM",
+    "reduced motion disables sidebar and dialog motion"
+  ]
+}

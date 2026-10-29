@@ -1,0 +1,15 @@
+{
+  "name": "claude2api-ui",
+  "private": true,
+  "scripts": {
+    "build:ui": "node scripts/build-ui.mjs",
+    "test:ui": "node --test tests/*.test.cjs"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "1.8.0",
+    "lucide": "1.62.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}
