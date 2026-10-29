@@ -1,0 +1,108 @@
+name: Release Multi-Arch Linux Binaries
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Linux Binaries
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - goarch: amd64
+            goarm: ""
+            name: linux-amd64
+          - goarch: arm64
+            goarm: ""
+            name: linux-arm64
+          - goarch: arm
+            goarm: "7"
+            name: linux-armv7
+          - goarch: arm
+            goarm: "6"
+            name: linux-armv6
+          - goarch: riscv64
+            goarm: ""
+            name: linux-riscv64
+          - goarch: mips64le
+            goarm: ""
+            name: linux-mips64le
+          - goarch: ppc64le
+            goarm: ""
+            name: linux-ppc64le
+          - goarch: s390x
+            goarm: ""
+            name: linux-s390x
+          - goarch: loong64
+            goarm: ""
+            name: linux-loong64
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+          check-latest: true
+
+      - name: Build Binary
+        env:
+          GOOS: linux
+          GOARCH: ${{ matrix.goarch }}
+          GOARM: ${{ matrix.goarm }}
+          CGO_ENABLED: 0
+        run: |
+          mkdir -p dist/claude2api-${{ matrix.name }}
+          go build -trimpath -ldflags="-s -w -extldflags '-static'" -o dist/claude2api-${{ matrix.name }}/claude2api ./cmd/server
+          cp config.example.yaml dist/claude2api-${{ matrix.name }}/config.example.yaml
+          cp LICENSE dist/claude2api-${{ matrix.name }}/LICENSE
+          cp THIRD_PARTY_NOTICES.md dist/claude2api-${{ matrix.name }}/THIRD_PARTY_NOTICES.md
+          cd dist
+          tar -czvf claude2api-${{ matrix.name }}.tar.gz claude2api-${{ matrix.name }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude2api-${{ matrix.name }}
+          path: dist/claude2api-${{ matrix.name }}.tar.gz
+
+  release:
+    name: Publish GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare Assets & Generate Checksums
+        run: |
+          mkdir -p release_assets
+          find artifacts -name "*.tar.gz" -exec cp {} release_assets/ \;
+          cd release_assets
+          sha256sum *.tar.gz > sha256sums.txt
+          cat sha256sums.txt
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release_assets/*.tar.gz
+            release_assets/sha256sums.txt
+          generate_release_notes: true
+          draft: false
+          prerelease: false

@@ -100,6 +100,39 @@ go build -o claude2api ./cmd/server
 
 ---
 
+## 跨架构二进制构建与下载
+
+项目支持免 Docker 的纯静态二进制直接运行，覆盖几乎全部 Linux 架构与主流发行版（Ubuntu、Debian、CentOS、RHEL、Alpine、Arch、Rocky、Fedora、OpenSUSE 等）。
+
+### 1. 架构覆盖清单
+
+| 架构名称 | 目标硬件与应用场景 | 发布包名 |
+| :--- | :--- | :--- |
+| **linux-amd64** | x86_64 标准架构（云服务器、VPS、PC） | `claude2api-v*-linux-amd64.tar.gz` |
+| **linux-arm64** | AArch64 64位（树莓派 4/5、各类 ARM 云服务器、Mac M系列虚拟机） | `claude2api-v*-linux-arm64.tar.gz` |
+| **linux-armv7** | ARM 32位（树莓派 2/3、老旧嵌入式主板、软路由） | `claude2api-v*-linux-armv7.tar.gz` |
+| **linux-armv6** | ARM 32位极简（树莓派 Zero / 1） | `claude2api-v*-linux-armv6.tar.gz` |
+| **linux-riscv64** | RISC-V 64位开放指令集开发板 | `claude2api-v*-linux-riscv64.tar.gz` |
+| **linux-loong64** | 龙芯 LoongArch 自主指令集终端/服务器 | `claude2api-v*-linux-loong64.tar.gz` |
+| **linux-mips64le** | MIPS64 小端架构（早期龙芯、工控网关） | `claude2api-v*-linux-mips64le.tar.gz` |
+| **linux-ppc64le** | PowerPC 64位小端服务器 | `claude2api-v*-linux-ppc64le.tar.gz` |
+| **linux-s390x** | IBM System z 大机平台 | `claude2api-v*-linux-s390x.tar.gz` |
+
+### 2. 本地跨架构一键编译脚本
+
+宿主机无需安装任何 Go 编译环境，只要具备基础 Docker 即可执行编译发布脚本：
+
+```bash
+# 执行本地一键多架构交叉编译（自动生成纯静态无 CGO 依赖包及 sha256 校验单）
+bash scripts/build-linux-release.sh v1.0.0
+```
+
+### 3. GitHub Actions 自动发布
+
+每次推送版本 Tag（例如 `git tag -a v1.0.0 -m "Release v1.0.0" && git push origin --tags`），GitHub CI 工作流将自动触发并在 [Releases](https://github.com/sakmiko/claude2api/releases) 页面生成带哈希清单的全套下载附件。
+
+---
+
 ## 环境变量与配置参数 (`config.yaml`)
 
 | 配置项 | 默认值 | 说明 |
